@@ -20,16 +20,22 @@ namespace Solution
 
                 Debug.Log("You win");
                 //add code to manage leaderboard scores
-    
+                int scorereceived = CalculateScore();
+                string playerName = mapGenerator.player.Name;
+                leaderboard.RecordScore(new PlayerScore(playerName, scorereceived));
+                leaderboard.PrintScores();
+                leaderboard.ShowleaderBoard();
                 return true;
             }
-            else {
+            else 
+            {
                 Debug.Log("Need Item " + ItemToOpen + " to Open");
                 return false;
             }
         }
         //Logic CalculateScore
-        int CalculateScore() {
+        int CalculateScore() 
+        {
             int score = (int)((mapGenerator.player.energy * 100) / Time.time);
             return score;
         }

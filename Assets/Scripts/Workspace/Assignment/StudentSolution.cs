@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Assignment
 {
@@ -14,7 +15,18 @@ namespace Assignment
 
             // Your code here ...
             // ...
-
+            for (int i = 0; i < array.Length; i++) 
+            {
+                if(array[i] == target)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1) 
+            {
+                Debug.Log("Target not found in the array.");
+            }
 
             return index;
         }
@@ -33,7 +45,26 @@ namespace Assignment
 
             // Your code here ...
             // ...
-
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j] == target)
+                    {
+                        row = i;
+                        col = j;
+                        break;
+                    }
+                }
+                if (row != -1 && col != -1)
+                {
+                    break;
+                }
+            }
+            if (row == -1 || col == -1)
+            {
+                Debug.Log("Target not found in the array.");
+            }
             return new[] { row, col };
         }
 
@@ -45,6 +76,31 @@ namespace Assignment
 
             // Your code here ...
             // ...
+            int left = 0;
+            int right = array.Length - 1;
+
+            while (left <= right)
+            {
+                int mid = left + (right - left) / 2;
+                if (array[mid] == target)
+                {
+                    index = mid;
+                    break;
+                }
+                else if (array[mid] < target)
+                {
+                    left = mid + 1;
+                }
+                else
+                {
+                    right = mid - 1;
+                }
+            }
+
+            if (index == -1)
+            {
+                Debug.Log("Target not found in the array.");
+            }
 
             return index;
         }
