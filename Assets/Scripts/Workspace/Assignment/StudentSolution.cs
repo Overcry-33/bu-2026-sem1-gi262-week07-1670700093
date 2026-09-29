@@ -15,15 +15,15 @@ namespace Assignment
 
             // Your code here ...
             // ...
-            for (int i = 0; i < array.Length; i++) 
+            for (int i = 0; i < array.Length; i++)
             {
-                if(array[i] == target)
+                if (array[i] == target)
                 {
                     index = i;
                     break;
                 }
             }
-            if (index == -1) 
+            if (index == -1)
             {
                 Debug.Log("Target not found in the array.");
             }
@@ -122,18 +122,17 @@ namespace Assignment
                     {
                         first = i;
                     }
+
                     last = i;
                 }
             }
 
-            // หากไม่พบ target ให้คืนค่า null
             if (first == -1)
             {
-                return null;
+                return new int[] { -1 };
             }
 
             return new int[] { first, last };
-            //throw new NotImplementedException();
         }
 
         public int AS02_FindMaxLessThan(int[] array, int target)
@@ -144,19 +143,15 @@ namespace Assignment
             // วนลูปหาค่าที่น้อยกว่า target แต่มีค่ามากที่สุดในกลุ่มนั้น
             for (int i = 0; i < array.Length; i++)
             {
-                if (array[i] < target)
+                if (array[i] < target && (!found || array[i] > maxVal))
                 {
-                    if (array[i] > maxVal)
-                    {
-                        maxVal = array[i];
-                        found = true;
-                    }
+                    maxVal = array[i];
+                    found = true;
                 }
             }
 
-            // หากไม่มีค่าใดน้อยกว่า target เลย ให้ส่งคืนค่า -1 (หรือตามที่โจทย์กำหนด)
+            // หากไม่มีค่าใดน้อยกว่า target ให้คืนค่า -1
             return found ? maxVal : -1;
-            //throw new NotImplementedException();
         }
 
         public int[] AS03_FindRange(int[] array, int min, int max)
@@ -186,7 +181,6 @@ namespace Assignment
             }
 
             return result;
-            //throw new NotImplementedException();
         }
 
         #endregion
@@ -194,23 +188,26 @@ namespace Assignment
         #region Extra
 
         public int[] EX01_FindTargetEnemies(int[] enemyHPs, int mana)
-        {           
-            // ค้นหาดัชนีของศัตรู 2 ตัวที่มี HP รวมกันเท่ากับ mana พอดี
+        {
+            // Select enemies in array order while sufficient mana remains.
+            int[] selected = new int[enemyHPs.Length];
+            int count = 0;
+            int remainingMana = mana;
+
             for (int i = 0; i < enemyHPs.Length; i++)
             {
-                for (int j = i + 1; j < enemyHPs.Length; j++)
+                if (enemyHPs[i] <= remainingMana)
                 {
-                    if (enemyHPs[i] + enemyHPs[j] == mana)
-                    {
-                        return new int[] { i, j };
-                    }
+                    selected[count] = enemyHPs[i];
+                    count++;
+                    remainingMana -= enemyHPs[i];
                 }
             }
 
-            // กรณีหาไม่เจอ (เช่น เคส None) ให้คืนค่า null
-            return null;
+            int[] result = new int[count];
+            Array.Copy(selected, result, count);
+            return result;
         }
-        //throw new NotImplementedException();
         #endregion
     }
 }
